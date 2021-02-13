@@ -1,0 +1,32 @@
+<%= form_for(article) do |f| %>
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div id="editor"></div>
+
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<script>
+  $(function () {
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/markdown");
+    editor.getSession().setUseWrapMode(true);
+    var content = $('#article_content').val();
+    editor.setValue(content);
+    editor.getSession().on('change', function(e) {
+      var newContent = editor.getValue(content);
+      $('#article_content').val(newContent);
+    });
+  })
+</script>
